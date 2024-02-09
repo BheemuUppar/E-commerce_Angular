@@ -1,0 +1,54 @@
+.row > div {
+  padding: 5px;
+  /* border: 1px solid black; */
+}
+
+.fa-star,
+.fa-star-half-stroke {
+  color: #ffd43b;
+}
+
+.quantity {
+  height: 30px;
+  /* width: 83px; */
+  overflow: hidden;
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.quantity input[type="text"] {
+  width: 33px;
+  padding-left: 10px;
+}
+.quantity button {
+  border: none;
+  background: #efefef;
+  width: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+}
+.delivery-box {
+  border: 1px solid black;
+}
+
+.specification ul {
+  list-style: none;
+}
+.specification ul li  {
+  text-transform: capitalize;
+}
+.reviews-card .card-header {
+  text-transform: capitalize;
+}
+.multiple-images div img{
+    height: 60px;
+    width: 60px;
+}
+
+.img-large{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

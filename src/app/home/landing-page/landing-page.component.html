@@ -1,0 +1,19 @@
+<div class="categories m-2">
+    <h4>Our Top Categories</h4>
+
+    <div class="d-flex">
+        <ul class="category-list">
+            <li [ngClass]="{'selected-category':selectedCategory == category.name}"
+                *ngFor="let category of categories" (click)="selectedCategory = category.name">
+                <div class="category-icon">
+                    <i [ngClass]="getCategoryIcon(category.name)"></i>
+                </div>
+                <span>{{category.name}}</span>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="m-2">
+    <app-product-list [selectedCategory]="selectedCategory"></app-product-list>
+</div>

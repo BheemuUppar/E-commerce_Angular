@@ -1,0 +1,13 @@
+.example-form{
+    display: flex;
+    flex-direction: column;
+}
+
+button.signup{
+    background-color: #DB4444;
+    color: #FAFAFA;
+}
+
+::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+    background-color: transparent !important;
+}

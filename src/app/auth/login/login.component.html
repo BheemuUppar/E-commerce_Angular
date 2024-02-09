@@ -1,0 +1,28 @@
+<div class="div">
+    <h3>Login to E-Shop</h3>
+    <p>Enter Your Details Below</p>
+</div>
+<form class="example-form" [formGroup]="loginForm">
+    <mat-form-field class="example-full-width">
+        <mat-label>Email</mat-label>
+        <input type="email" matInput formControlName="email" placeholder="Ex. pat@example.com">
+
+        <mat-error *ngIf=" !loginForm.get('email')?.errors?.['required']">
+            Please enter a valid email address
+        </mat-error>
+        <mat-error *ngIf="loginForm.get('email')?.errors?.['required']">Email is <strong>required</strong></mat-error>
+
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+        <mat-label>Passowrd</mat-label>
+        <input type="password" matInput formControlName="password" placeholder="Passowrd">
+        <mat-error *ngIf="loginForm.get('password')?.errors?.['required']">Passowrd is
+            <strong>required</strong></mat-error>
+    </mat-form-field>
+    <div class="d-flex justify-content-between">
+        <button [disabled]="loginForm.invalid" type="submit" class="btn login" (click)="login()">Log in</button>
+        <a class="text-danger pt-2" href="#">Forgot Password</a>
+    </div>
+</form>
+<span>
+<a routerLink="/auth/register">Don't Have Account click here to create one</a></span>

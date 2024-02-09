@@ -1,0 +1,48 @@
+<div class="div">
+    <h3>Create an account</h3>
+    <p>Enter Your Details Below</p>
+</div>
+<form class="example-form" [formGroup]="signUpForm">
+    <mat-form-field class="example-full-width">
+        <mat-label>Name</mat-label>
+        <input type="text" matInput formControlName="name" placeholder="Enter name">
+        <mat-error *ngIf="signUpForm.get('name')?.errors?.['required']">Name is <strong>required</strong></mat-error>
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+        <mat-label>Email</mat-label>
+        <input type="email" matInput formControlName="email" placeholder="Ex. pat@example.com">
+
+        <mat-error *ngIf=" !signUpForm.get('email')?.errors?.['required']">
+            Please enter a valid email address
+        </mat-error>
+        <mat-error *ngIf="signUpForm.get('email')?.errors?.['required']">Email is <strong>required</strong></mat-error>
+
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+        <mat-label>Mobile</mat-label>
+        <input type="number" matInput formControlName="mobile" placeholder="Enter Your Mobile Number">
+        <mat-error *ngIf="signUpForm.get('mobile')?.errors?.['required']">Mobile is
+            <strong>required</strong></mat-error>
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+        <mat-label>Passowrd</mat-label>
+        <input type="password" matInput formControlName="password" placeholder="Passowrd">
+        <mat-error *ngIf="signUpForm.get('password')?.errors?.['required']">Passowrd is
+            <strong>required</strong></mat-error>
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+        <mat-label>confirm Passowrd</mat-label>
+        <input type="password" matInput formControlName="cnf_password" placeholder="Confirm Passowrd">
+        <mat-error *ngIf="signUpForm.get('cnf_password')?.errors?.['required']">confirm password</mat-error>
+        <mat-error *ngIf="signUpForm.get('cnf_password')?.errors?.['passwordMismatch']">match error</mat-error>
+
+
+    </mat-form-field>
+    <div class="d-flex justify-content-between mt-1">
+        <button [disabled]="signUpForm.invalid" type="submit" class="btn signup" (click)="register()">Create
+            Accout</button>
+        <!-- <a class="text-danger pt-2" href="#">Forgot Password</a> -->
+    </div>
+</form>
+
+<span>already have account?<a routerLink="/auth/login">login</a></span>

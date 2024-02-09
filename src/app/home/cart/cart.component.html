@@ -1,0 +1,81 @@
+<div class="d-flex flex-column">
+    <div class="table-wrapper my-2 ">
+        <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource">
+
+                <!-- Checkbox Column -->
+                <ng-container matColumnDef="Select">
+                    <th mat-header-cell *matHeaderCellDef>
+                        <mat-checkbox (change)="$event ? toggleAllRows() : null"
+                            [checked]="selection.hasValue() && isAllSelected()"
+                            [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+                        </mat-checkbox>
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        <mat-checkbox (click)="$event.stopPropagation()"
+                            (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)"
+                            [aria-label]="checkboxLabel(row)">
+                        </mat-checkbox>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Name">
+                    <th mat-header-cell *matHeaderCellDef> Name</th>
+                    <td mat-cell *matCellDef="let element">
+                        <div>
+                            <img src="data:image/png;base64,{{ element.images[0] }}" alt="">
+                            <p class="m-0">{{element.name}}</p>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Quantity">
+                    <th mat-header-cell *matHeaderCellDef> Quantity </th>
+                    <td mat-cell *matCellDef="let element">
+                        <div>
+                            <!-- <select name="quantity" id="quantity" [(ngModel)]="element['quantity']">
+                                <option  value="">Select Quantity</option>
+                                <option selected value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                            </select> -->
+                            <div class="input-group">
+                                <button id="decrement" (click)="decreaseQuantity(element._id)">-</button>
+                                <input type="number" id="input" value="0" name="quantity" id="quantity"
+                                    [(ngModel)]="element['quantity']" readonly>
+                                <button id="increment" (click)="increaseQuantity(element._id)">+</button>
+                            </div>
+                        </div>
+                    </td>
+
+                </ng-container>
+
+                <ng-container matColumnDef="Price">
+                    <th mat-header-cell *matHeaderCellDef> Price/item </th>
+                    <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Total">
+                    <th mat-header-cell *matHeaderCellDef> Total </th>
+                    <td mat-cell *matCellDef="let element"> {{calculatePrice(element.price , element['quantity'])}}</td>
+                </ng-container>
+
+
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]" aria-label="Select page of periodic elements">
+            </mat-paginator>
+        </div>
+    </div>
+    <div class="">
+        <div>
+            <Strong>Total : </Strong>
+            <p>{{getSelectedTotalPrice()}}</p>
+        </div>
+        <div> <button class="btn btn-primary" (click)="checkout()"
+                [disabled]="selection.selected.length == 0">Checkout</button></div>
+    </div>
+</div>

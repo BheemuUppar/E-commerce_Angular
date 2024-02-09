@@ -1,0 +1,26 @@
+<div class="row" *ngFor="let product of data.selectedProducts">
+    <div class="col image">
+        <img src="data:image/png;base64,{{ product.images[0] }}" alt="">
+
+    </div>
+    <div class="col name">
+        <a href="">{{product.name}}</a>
+    </div>
+    <div class="col d-flex">
+        <p>{{product.price}}</p>
+        <p>X</p>
+        <p>{{product.quantity}}</p>
+    </div>
+</div>
+
+Total:{{getTotalPrice()}}
+
+<div class="d-flex flex-column align-items-center">
+    <button class="btn btn-primary">Cash on Delivery</button>
+    <span>OR</span>
+    <button class="btn btn-primary" (click)="order()">Pay Now</button>
+</div>
+
+<!-- <pre>
+    {{data | json}}
+</pre> -->

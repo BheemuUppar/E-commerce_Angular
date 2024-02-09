@@ -1,0 +1,65 @@
+.cart-card {
+  height: 10%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.cart-card .image img {
+  height: 80px;
+  width: 80px;
+}
+
+::ng-deep .mat-column-Name img {
+  height: 60px;
+  width: 60px;
+}
+::ng-deep tbody .mat-column-Name div {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+
+
+.input-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+ 
+  border-radius: 15px;
+  max-width: 150px;
+  flex-wrap: nowrap;
+}
+
+button,
+input {
+  outline: none;
+  border: none;
+  padding: 16px;
+  font-size: 18px;
+}
+
+input {
+  width: 100%;
+  text-align: center;
+}
+
+button {
+  cursor: pointer;
+}
+button:nth-last-child(1) {
+  border-bottom-right-radius: 15px;
+  border-top-right-radius: 15px;
+}
+button:nth-child(1) {
+  border-bottom-left-radius: 15px;
+  border-top-left-radius: 15px;
+}
+
+button:hover {
+  background-color: #e6e6e6;
+}
+.mat-elevation-z8{
+  box-shadow: none;
+}

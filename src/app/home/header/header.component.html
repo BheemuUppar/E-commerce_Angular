@@ -1,0 +1,69 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary px-2">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">E-shop</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <!-- <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Dropdown
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+          </li>
+        </ul> -->
+      <form class="d-flex ms-auto" role="search">
+        <input class="form-control me-2" type="text" placeholder="Search" aria-label="Search" name="searchText"
+          [(ngModel)]="searchText">
+        <button class="btn btn-outline-success" type="submit" (click)="mode?setMode(false):setMode(true)">
+          <i class="fa-solid fa-magnifying-glass" *ngIf="mode == false"></i>
+          <i class="fa-solid fa-xmark" *ngIf="mode"></i>
+        </button>
+      </form>
+      <div class="d-flex justify-content-start align-items-center">
+        <div class="profile">
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              <div class="user-icon"><i class="fa-regular fa-user"></i></div>
+              <div class="name">{{username}}</div>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-lg-start" *ngIf="username != undefined">
+              <li><button class="dropdown-item" type="button">Orders</button></li>
+              <li><button class="dropdown-item" type="button" (click)="logout()">
+                  <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                  Logout
+                </button></li>
+            </ul>
+            <ul class="dropdown-menu dropdown-menu-lg-start" *ngIf="username == undefined">
+              <li>
+                <button class="dropdown-item" type="button" (click)="logout()">
+                  Login
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="home"><a routerLink="/"><i class="fa-solid fa-house"></i></a></div>
+        <div class="wishlists"><a routerLink="/wishlist"><i class="fa-regular fa-heart"></i></a></div>
+        <div class="cart-btn"><a routerLink="/cart"><i class="fa-solid fa-cart-shopping"></i></a></div>
+      </div>
+    </div>
+  </div>
+</nav>

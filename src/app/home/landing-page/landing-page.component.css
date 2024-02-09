@@ -1,0 +1,31 @@
+.category-list {
+    display: flex;
+    list-style: none;
+    width: 81%;
+    justify-content: space-around;
+    margin: auto;
+  }
+  
+  .category-icon {
+    height: 65px;
+    width: 65px;
+    background: #EFEFEF;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .fa-solid{
+      font-size: 22px;
+  }
+  .category-list li {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+  }
+  .selected-category .category-icon{
+    background-color: aqua;
+  }
+  

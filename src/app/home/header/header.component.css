@@ -1,0 +1,9 @@
+.profile .dropdown .dropdown-toggle{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    color: black;
+    border: none;
+}
