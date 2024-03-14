@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Subject, Observable } from 'rxjs';
+import { Subject, Observable, BehaviorSubject } from 'rxjs';
 declare var Razorpay: any;
 @Injectable({
   providedIn: 'root',
 })
 export class PaymentService {
   private rzp: any;
-   paymentStatusSubject = new Subject<string>();
+   paymentStatusSubject = new BehaviorSubject<any>({status:undefined, orderDetails:undefined});
   constructor(private http: HttpClient) {}
   paymentStatus$ = this.paymentStatusSubject.asObservable();
 

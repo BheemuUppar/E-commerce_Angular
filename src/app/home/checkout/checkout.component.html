@@ -1,26 +1,84 @@
-<div class="row" *ngFor="let product of data.selectedProducts">
-    <div class="col image">
-        <img src="data:image/png;base64,{{ product.images[0] }}" alt="">
+<div *ngIf="savedOrder == undefined">
+    <div class="row" *ngFor="let product of data.selectedProducts">
+        <div class="col image">
+            <img src="data:image/png;base64,{{ product.images[0] }}" alt="">
 
+        </div>
+        <div class="col name">
+            <a href="">{{product.name}}</a>
+        </div>
+        <div class="col d-flex">
+            <p>{{product.price}}</p>
+            <p>X</p>
+            <p>{{product.quantity}}</p>
+        </div>
     </div>
-    <div class="col name">
-        <a href="">{{product.name}}</a>
+
+    Total:{{getTotalPrice()}}
+
+    <div class="d-flex flex-column align-items-center">
+        <div>
+            <div class="card">
+                <div class="card-body">
+                    <form action="" [formGroup]="addressForm">
+
+
+                        <div class="form-group address">
+                            <label for="">Contact Info</label>
+                            <input type="number" class="form-control" formControlName="phNo" id="" aria-describedby=""
+                                placeholder="Enter Phone Number">
+                            <label for="AddressInfo">Adress Info</label>
+                            <input type="text" class="form-control" formControlName="name" id="" placeholder="Name">
+                            <input type="text" class="form-control" formControlName="buildingName" id=""
+                                placeholder="Building Name">
+                            <input type="text" class="form-control" formControlName="street" id="" placeholder="Street">
+
+                            <div class="d-flex">
+                                <input type="text" class="form-control" formControlName="city" id="" placeholder="City">
+                                <input type="text" class="form-control" formControlName="state" id=""
+                                    placeholder="State">
+
+                            </div>
+                            <input type="number" class="form-control" formControlName="pincode" id=""
+                                placeholder="Pincode">
+                        </div>
+                        <footer>
+
+                        </footer>
+                    </form>
+                    <div class="payment">
+                        <button type="submit" class="btn btn-outline-primary" [disabled]="!addressForm.valid"
+                            (click)="order('cash')" (click)="addressDetailes()">Cash on Delivery</button>
+                        <span> / </span>
+                        <button type="submit" class="btn btn-outline-primary" [disabled]="!addressForm.valid"
+                            (click)="order('online')">Pay Now</button>
+
+                    </div>
+                </div>
+            </div>
+            <!-- <input type="number" name="" id=""> -->
+        </div>
     </div>
-    <div class="col d-flex">
-        <p>{{product.price}}</p>
-        <p>X</p>
-        <p>{{product.quantity}}</p>
-    </div>
+
 </div>
 
-Total:{{getTotalPrice()}}
 
-<div class="d-flex flex-column align-items-center">
-    <button class="btn btn-primary">Cash on Delivery</button>
-    <span>OR</span>
-    <button class="btn btn-primary" (click)="order()">Pay Now</button>
+<div *ngIf="savedOrder != undefined ">
+    <h3>Order Placed</h3>
+    <pre>
+        {{savedOrder  }}
+    </pre>
 </div>
 
-<!-- <pre>
-    {{data | json}}
-</pre> -->
+
+<ng-template #myDialog>
+   
+    <mat-dialog-content>
+        <div class="confirmation-container">
+            <div class="checkmark"></div>
+            <h2>Order Confirmed</h2>
+            <p class="message">Your order has been confirmed and is ready for dispatch.</p>
+            <button class="button" (click)="closeDialog()" class="button">Continue Shopping</button>
+          </div>
+    </mat-dialog-content> 
+  </ng-template>

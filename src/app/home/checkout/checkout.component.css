@@ -1,10 +1,123 @@
-.row
-{
-    height: 60px;
-    max-height: 60px;
-    overflow: hidden;
-    
+.row {
+  height: 60px;
+  max-height: 60px;
+  overflow: hidden;
 }
-.image img{
-    height: 30px;
+.image img {
+  height: 30px;
 }
+
+.overlay {
+  position: fixed; /* Sit on top of the page content */
+  width: 100%; /* Full width (cover the whole page) */
+  height: 100%; /* Full height (cover the whole page) */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
+  z-index: 255; /* Specify a stack order in case you're using a different order for other elements */
+  cursor: pointer; /* Add a pointer on hover */
+}
+
+.spinner {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.loader {
+  width: 48px;
+  height: 48px;
+  border: 5px solid #000;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.address input {
+  margin-bottom: 5px;
+}
+.card {
+  width: 400px;
+}
+.payment {
+  text-align: end;
+  margin-top: 20px;
+}
+
+.confirmation-container {
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+h2 {
+  color: #333;
+}
+
+.checkmark {
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 3px solid #4caf50;
+  position: relative;
+  animation: checkmark 0.5s;
+}
+
+.checkmark::before {
+  content: "";
+  position: absolute;
+  width: 25px;
+  height: 50px;
+  border-bottom: 3px solid #4caf50;
+  border-right: 3px solid #4caf50;
+  transform: rotate(45deg);
+  top: 8px;
+  left: 25px;
+}
+
+@keyframes checkmark {
+  0% {
+    stroke-dashoffset: 100;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.message {
+  margin-top: 20px;
+  color: #666;
+}
+.button {
+    margin-top: 20px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .button:hover {
+    background-color: #45a049;
+  }

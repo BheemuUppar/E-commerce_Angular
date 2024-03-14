@@ -26,6 +26,8 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { CheckoutComponent } from './home/checkout/checkout.component';
 import { PaymentDetailsComponent } from './payment-details/payment-details.component';
+import { ShowPaymentStatusComponent } from './home/show-payment-status/show-payment-status.component';
+import { MatDialogModule } from '@angular/material/dialog';
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,6 +45,7 @@ import { PaymentDetailsComponent } from './payment-details/payment-details.compo
     CartComponent,
     CheckoutComponent,
     PaymentDetailsComponent,
+    ShowPaymentStatusComponent,
   ],
   imports: [
     BrowserModule,
@@ -56,8 +59,8 @@ import { PaymentDetailsComponent } from './payment-details/payment-details.compo
     MatInputModule,
     MatTableModule,
     MatPaginatorModule,
-    MatCheckboxModule
-
+    MatCheckboxModule,
+    MatDialogModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AppHttpInterceptor, multi: true }],
   bootstrap: [AppComponent],

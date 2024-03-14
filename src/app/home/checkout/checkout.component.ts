@@ -1,29 +1,86 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PaymentService } from 'src/app/services/payment.service';
 import { StorageService } from 'src/app/services/storage.service';
+import { MatDialog } from '@angular/material/dialog';
 
+interface shippingAddress {
+  phNo: string;
+  name: string;
+  buildingName: string;
+  street: string;
+  city: string;
+  state: string;
+  pincode: string;
+}
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.css'],
 })
-export class CheckoutComponent {
+export class CheckoutComponent implements OnInit {
   data: any;
   orderDetails: any;
+  savedOrder: any;
+  statusMessage: any;
+  address = '';
+  paymentMode!: string;
+  addressForm!: FormGroup;
+  success!: boolean;
+
   constructor(
     private actRoute: ActivatedRoute,
     private paymentService: PaymentService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private cdr: ChangeDetectorRef,
+    private formbuilder: FormBuilder,
+    public dialog: MatDialog,
+    private router:Router
   ) {
     this.actRoute.queryParams.subscribe((params) => {
       this.data = JSON.parse(params['product']);
     });
-    this.paymentService.paymentStatus$.subscribe((res:any)=>{
-      if(res == 'success'){
-        alert('payment success verifying...');
+  }
+  ngOnInit(): void {
+    this.addressForm = this.formbuilder.group({
+      phNo: ['', Validators.required],
+      name: ['', Validators.required],
+      buildingName: ['', Validators.required],
+      street: ['', Validators.required],
+      city: ['', Validators.required],
+      state: ['', Validators.required],
+      pincode: ['', Validators.required],
+    });
+    
+    this.paymentService.paymentStatus$.subscribe((res) => {
+      if (res.status != undefined) {
+        this.statusMessage = res.status;
+        if (res.orderDetails) {
+          this.savedOrder = res.orderDetails;
+      
+        }
+        this.cdr.detectChanges(); // Manually trigger change detection
       }
-    })
+    });
+  }
+
+  openDialog() {
+    this.dialog.open(this.myDialog, {
+      disableClose:true,
+     
+    });
+  }
+
+  addressDetailes() {
+    console.log(this.addressForm.value);
   }
 
   getTotalPrice() {
@@ -37,22 +94,18 @@ export class CheckoutComponent {
     return (price * quantity).toFixed(2);
   }
 
-  order() {
+  order(paymentMode: string) {
+    this.paymentMode = paymentMode;
     let str = localStorage.getItem('user');
     // if (str) {
     this.orderDetails = this.getOrderDetails();
-    // this.userService.fetchUserDetails(str).subscribe(async (res: any) => {
-    //   console.log(res.data);
-    //   let profile = {
-    //     name: res.data.name,
-    //     email: res.data.email,
-    //     mobile: res.data.mobile,
-    //   };
-    //   this.orderDetails = await this.getOrderDetails(profile);
-    //   this.orderDetails.amount = this.orderDetails.amount * 100;
-    //   this.orderDetails.paymentMode = 'online'
-    //   // console.log(this.product)
-    //   // console.log(orderDetails)
+    if (this.paymentMode == 'online') {
+      this.onlinePayment();
+    } else if (this.paymentMode == 'cash') {
+      this.cashPayment();
+    }
+  }
+  onlinePayment() {
     this.paymentService.createOrder(this.orderDetails).subscribe((response) => {
       try {
         this.orderDetails = response.orderDetails;
@@ -60,6 +113,7 @@ export class CheckoutComponent {
         let options = {
           key: 'rzp_test_GUCLqEesz1MaZA', // Enter the Key ID generated from the Dashboard
           amount: response.orderDetails.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+
           currency: 'INR',
           name: 'E-shop', //your business name
           description: 'Test Transaction',
@@ -83,37 +137,41 @@ export class CheckoutComponent {
         console.log('ERRRROORRRRR', error);
       }
     });
-    // });
-    // }
+  }
+
+  cashPayment() {
+    
+    alert('Delivery confirmed,Thankyou' + this.addressForm.value.name);
   }
 
   handlePaymentResponse(response: any): void {
-    // console.log('Payment successful:', response);
-    // console.log('order-details ', this )
-    this.paymentService.paymentStatusSubject.next('success')
+    this.paymentService.paymentStatusSubject.next({
+      status: 'verifying payment',
+      orderDetails: undefined,
+    });
+   
     let obj = { ...response, ...this.orderDetails };
     console.log('after success  ', obj);
     this.verifyPayment(obj);
     // Add logic to update order status on the server
   }
+  @ViewChild('myDialog', { static: true })
+  myDialog!: TemplateRef<any>;
   verifyPayment(data: any) {
-    this.paymentService.verifyPayment(data).subscribe((res:any) => {
+    this.paymentService.verifyPayment(data).subscribe((res: any) => {
       console.log(res);
-      if(res.message == 'payment is successful'){
-
+      if (res.message == 'payment is successful') {
+        this.success = true;
+        this.openDialog()
+        this.paymentService.paymentStatusSubject.next({
+          status: 'successfull',
+          orderDetails: res.orderDetails,
+        });
       }
     });
   }
 
   getOrderDetails() {
-    // return {
-    //   amount: this.getTotalPrice(),
-    //   productId: this.product._id,
-    //   productName: this.product.name,
-    //   quantity: this.quantity,
-    //   profile: user,
-    //   deliveryAddress: 'banglore',
-    // };
     let name = this.storageService.getJsonValue('username');
     let email = this.storageService.getJsonValue('email');
     let mobile = this.storageService.getJsonValue('mobile');
@@ -123,10 +181,11 @@ export class CheckoutComponent {
       mobile: mobile,
     };
     return {
-      amount: this.getTotalPrice(),
+      amount: this.getTotalPrice() * 100,
       products: this.getProductsDetails(),
       profile: profile,
-      deliveryAddress: 'banglore',
+      paymentMode: this.paymentMode,
+      deliveryAddress: this.addressForm.value,
     };
   }
 
@@ -141,4 +200,10 @@ export class CheckoutComponent {
     }
     return result;
   }
+
+  closeDialog(){
+    this.dialog.closeAll();
+    this.router.navigateByUrl("/")
+  }
+
 }
