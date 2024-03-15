@@ -2,7 +2,6 @@
     <div class="row" *ngFor="let product of data.selectedProducts">
         <div class="col image">
             <img src="data:image/png;base64,{{ product.images[0] }}" alt="">
-
         </div>
         <div class="col name">
             <a href="">{{product.name}}</a>
@@ -61,15 +60,6 @@
     </div>
 
 </div>
-
-
-<div *ngIf="savedOrder != undefined ">
-    <h3>Order Placed</h3>
-    <pre>
-        {{savedOrder  }}
-    </pre>
-</div>
-
 
 <ng-template #myDialog>
    

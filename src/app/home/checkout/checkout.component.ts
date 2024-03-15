@@ -51,13 +51,13 @@ export class CheckoutComponent implements OnInit {
   }
   ngOnInit(): void {
     this.addressForm = this.formbuilder.group({
-      phNo: ['', Validators.required],
-      name: ['', Validators.required],
-      buildingName: ['', Validators.required],
-      street: ['', Validators.required],
-      city: ['', Validators.required],
-      state: ['', Validators.required],
-      pincode: ['', Validators.required],
+      phNo: ['12345644', Validators.required],
+      name: ['jhon', Validators.required],
+      buildingName: ['xyz appartments', Validators.required],
+      street: ['church street', Validators.required],
+      city: ['washington', Validators.required],
+      state: ['washington', Validators.required],
+      pincode: ['0000000', Validators.required],
     });
     
     this.paymentService.paymentStatus$.subscribe((res) => {
@@ -203,7 +203,7 @@ export class CheckoutComponent implements OnInit {
 
   closeDialog(){
     this.dialog.closeAll();
-    this.router.navigateByUrl("/")
+    this.router.navigateByUrl("list")
   }
 
 }
