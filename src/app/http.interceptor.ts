@@ -16,20 +16,23 @@ export class AppHttpInterceptor implements HttpInterceptor {
   constructor(private router: Router) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler) {
-    let loaderService  = inject(LoaderService);
-    let userService  = inject(UserService);
-loaderService.show()
+    let loaderService = inject(LoaderService);
+    let userService = inject(UserService);
+    loaderService.show();
     return next.handle(request).pipe(
       catchError((err: any) => {
-      
+        loaderService.hide();
         if (err instanceof HttpErrorResponse) {
-          console.log(err)
-          if (err.error.message == 'Missing token' || err.error.message == 'Invalid token') {
+          console.log(err);
+          if (
+            err.error.message == 'Missing token' ||
+            err.error.message == 'Invalid token'
+          ) {
             this.router.navigateByUrl('/auth/login');
             console.log(err.error.message);
           } else if (err.error.message == 'Token has expired') {
             alert('session expired');
-            userService.auth.next(false)
+            userService.auth.next(false);
             this.router.navigateByUrl('/');
             localStorage.clear();
           }
@@ -38,7 +41,7 @@ loaderService.show()
       }),
       finalize(() => {
         // Hide loader when request is complete (successful or failed)
-       loaderService.hide();
+        loaderService.hide();
       })
     );
   }

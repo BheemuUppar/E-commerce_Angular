@@ -29,6 +29,10 @@ import { PaymentDetailsComponent } from './payment-details/payment-details.compo
 import { ShowPaymentStatusComponent } from './home/show-payment-status/show-payment-status.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { LoaderComponent } from './loader/loader.component';
+import { OrdersComponent } from './home/orders/orders.component';
+import { OrderListComponent } from './home/orders/order-list/order-list.component';
+import { OrderDetailsComponent } from './home/orders/order-details/order-details.component';
+import { DataViewModule } from 'primeng/dataview';
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,6 +52,9 @@ import { LoaderComponent } from './loader/loader.component';
     PaymentDetailsComponent,
     ShowPaymentStatusComponent,
     LoaderComponent,
+    OrdersComponent,
+    OrderListComponent,
+    OrderDetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -62,7 +69,8 @@ import { LoaderComponent } from './loader/loader.component';
     MatTableModule,
     MatPaginatorModule,
     MatCheckboxModule,
-    MatDialogModule
+    MatDialogModule,
+    DataViewModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AppHttpInterceptor, multi: true }],
   bootstrap: [AppComponent],

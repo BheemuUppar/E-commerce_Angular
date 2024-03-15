@@ -11,6 +11,9 @@ import { LandingPageComponent } from './home/landing-page/landing-page.component
 import { WishlistComponent } from './home/wishlist/wishlist.component';
 import { CartComponent } from './home/cart/cart.component';
 import { CheckoutComponent } from './home/checkout/checkout.component';
+import { OrdersComponent } from './home/orders/orders.component';
+import { OrderListComponent } from './home/orders/order-list/order-list.component';
+import { OrderDetailsComponent } from './home/orders/order-details/order-details.component';
 
 const routes: Routes = [
   {
@@ -34,6 +37,16 @@ const routes: Routes = [
         path: 'wishlist',
         component: WishlistComponent,
         canActivate: [authGuard],
+      },
+      {
+        path: 'orders',
+        component: OrdersComponent,
+        canActivate: [authGuard],
+        children:[
+        {
+          path:"details", component:OrderDetailsComponent
+        }
+      ]
       },
       {
         path: 'checkout',

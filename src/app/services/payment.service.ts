@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject, Observable, BehaviorSubject } from 'rxjs';
+import { StorageService } from './storage.service';
 declare var Razorpay: any;
 @Injectable({
   providedIn: 'root',
@@ -8,7 +9,7 @@ declare var Razorpay: any;
 export class PaymentService {
   private rzp: any;
    paymentStatusSubject = new BehaviorSubject<any>({status:undefined, orderDetails:undefined});
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private storageService:StorageService) {}
   paymentStatus$ = this.paymentStatusSubject.asObservable();
 
   initialize(options: any): void {
@@ -41,13 +42,26 @@ export class PaymentService {
 
   createOrder(orderDetails: any): Observable<any> {
     // Call your Node.js server to create an order
+    // let payload  = {
+    //   orderDetails:orderDetails,
+     
+    // }
+    let headers = {
+      Authorization: 'Bearer ' + this.storageService.getJsonValue('token')
+    };
     return this.http.post(
       'http://localhost:3000/payment/createOrder',
-      orderDetails
+      orderDetails, {headers}
     );
   }
 
   verifyPayment(data: any) {
-    return this.http.post('http://localhost:3000/payment/verify', data);
+    // let payload = {
+    //   data:data,
+    // }
+    let headers = {
+      Authorization: 'Bearer ' + this.storageService.getJsonValue('token')
+    };
+    return this.http.post('http://localhost:3000/payment/verify', data,{headers} );
   }
 }

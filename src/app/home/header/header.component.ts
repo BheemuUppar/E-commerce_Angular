@@ -46,4 +46,8 @@ this.userService.authSource.subscribe((res)=>{
     sessionStorage.clear();
     this.router.navigateByUrl('/auth/login');
   }
+
+  navigateTo(){
+    this.router.navigateByUrl("/orders")
+  }
 }

@@ -1,0 +1,16 @@
+
+<div *ngFor="let order of orders" class="order-container">
+    <div class="order-details">
+      <p><strong>Order ID:</strong> {{ order.id }}</p>
+      <p><strong>Amount:</strong> {{ order.amount }}</p>
+      <!-- Add more order details here -->
+    </div>
+    <div class="product-list">
+      <h4>Products:</h4>
+      <ul>
+        <li *ngFor="let product of order.products"><a (click)="displayProduct(product.productId)">{{ product.productName }}</a></li>
+        <!-- Display more product details here -->
+      </ul>
+    </div>
+  </div>
+  
