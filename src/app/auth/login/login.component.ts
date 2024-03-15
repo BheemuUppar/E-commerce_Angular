@@ -32,22 +32,24 @@ export class LoginComponent {
   login() {
     let email = this.loginForm.value.email;
     let password = this.loginForm.value.password;
-    this.authService.doLogin(email, password).subscribe((res: any) => {
+    this.authService.doLogin(email, password).subscribe(async (res: any) => {
       if (res.success == true) {
         this.storageService.setJsonValue('token', res.token)
-        this.setUserData(email);
+        await this.setUserData(email);
         this.userService.auth.next(true)
-        this.router.navigateByUrl('/');
+        this.router.navigateByUrl('list');
       }
     });
   }
 
-  setUserData(email: string) {
-    this.authService.fetchUserData(email).subscribe((response:any) => {
-      this.storageService.setJsonValue('username', response.data.name);
-      this.storageService.setJsonValue('email', response.data.email);
-      this.storageService.setJsonValue('mobile', response.data.mobile);
-      console.log(response);
-    });
+  setUserData(email: string):Promise<any> {
+    return new Promise((resolve, reject)=>{
+      this.authService.fetchUserData(email).subscribe((response:any) => {
+        this.storageService.setJsonValue('username', response.data.name);
+        this.storageService.setJsonValue('email', response.data.email);
+        this.storageService.setJsonValue('mobile', response.data.mobile);
+        resolve(response)
+      });
+    })
   }
 }

@@ -24,8 +24,10 @@ export class HeaderComponent implements OnInit {
     this.commonService.searchMode$.subscribe((data) => {
       this.mode = data.mode;
     });
+    this.username = this.storageService.getJsonValue('username');
 this.userService.authSource.subscribe((res)=>{
   this.username = this.storageService.getJsonValue('username');
+  console.log('username ',this.username)
 })
   }
 
