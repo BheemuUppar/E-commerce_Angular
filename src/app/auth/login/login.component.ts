@@ -8,6 +8,7 @@ import {
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { StorageService } from 'src/app/services/storage.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -20,8 +21,8 @@ export class LoginComponent {
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private storageService:StorageService
-  ) {
+    private storageService:StorageService,
+    private  userService  : UserService  ) {
     this.loginForm = this.fb.group({
       email: fb.control('', [Validators.required, Validators.email]),
       password: fb.control('', [Validators.required]),
@@ -34,13 +35,14 @@ export class LoginComponent {
     this.authService.doLogin(email, password).subscribe((res: any) => {
       if (res.success == true) {
         this.storageService.setJsonValue('token', res.token)
-        this.getUserData(email);
+        this.setUserData(email);
+        this.userService.auth.next(true)
         this.router.navigateByUrl('/');
       }
     });
   }
 
-  getUserData(email: string) {
+  setUserData(email: string) {
     this.authService.fetchUserData(email).subscribe((response:any) => {
       this.storageService.setJsonValue('username', response.data.name);
       this.storageService.setJsonValue('email', response.data.email);

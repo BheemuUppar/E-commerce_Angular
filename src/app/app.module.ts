@@ -28,6 +28,7 @@ import { CheckoutComponent } from './home/checkout/checkout.component';
 import { PaymentDetailsComponent } from './payment-details/payment-details.component';
 import { ShowPaymentStatusComponent } from './home/show-payment-status/show-payment-status.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { LoaderComponent } from './loader/loader.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,6 +47,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     CheckoutComponent,
     PaymentDetailsComponent,
     ShowPaymentStatusComponent,
+    LoaderComponent,
   ],
   imports: [
     BrowserModule,

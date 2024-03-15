@@ -2,11 +2,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { StorageService } from './storage.service';
 import { environment } from 'src/assets/environment';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
+  auth = new Subject();
+  authSource = this.auth.asObservable();
   constructor(
     private http: HttpClient,
     private storageService: StorageService
@@ -38,9 +41,8 @@ export class UserService {
 
   addTocart(id: any) {
     let payload = {
-      email:this.storageService.getJsonValue('email'),
+      email: this.storageService.getJsonValue('email'),
       productId: id,
-     
     };
 
     var headers = new HttpHeaders({

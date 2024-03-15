@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonService } from 'src/app/services/common.service';
 import { StorageService } from 'src/app/services/storage.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-header',
@@ -15,15 +16,17 @@ export class HeaderComponent implements OnInit {
   constructor(
     private commonService: CommonService,
     private storageService: StorageService,
-    private router: Router
+    private router: Router,
+    private userService:UserService
   ) {}
 
   ngOnInit(): void {
     this.commonService.searchMode$.subscribe((data) => {
       this.mode = data.mode;
     });
-
-    this.username = this.storageService.getJsonValue('username');
+this.userService.authSource.subscribe((res)=>{
+  this.username = this.storageService.getJsonValue('username');
+})
   }
 
   setMode(mode: boolean) {
