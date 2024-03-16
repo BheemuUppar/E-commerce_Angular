@@ -53,6 +53,10 @@
                     <th mat-header-cell *matHeaderCellDef> Total </th>
                     <td mat-cell *matCellDef="let element"> {{calculatePrice(element.price , element['quantity'])}}</td>
                 </ng-container>
+                <ng-container matColumnDef="Remove">
+                    <th mat-header-cell *matHeaderCellDef> Remove</th>
+                    <td mat-cell *matCellDef="let element"> <button class="btn btn-danger px-2 py-1" (click)="removeFromCart(element._id)"><i class="fa-solid fa-xmark"></i></button></td>
+                </ng-container>
 
 
 

@@ -52,4 +52,45 @@ export class UserService {
     let url = environment.baseUrl + '/user/addToCart';
     return this.http.post(url, payload, { headers: headers });
   }
+
+  addToWishlist(id:any){
+    let payload = {
+      email: this.storageService.getJsonValue('email'),
+      productId: id,
+    };
+
+    var headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + this.storageService.getJsonValue('token'),
+    });
+    let url = environment.baseUrl + '/user/addToWishlist';
+    return this.http.post(url, payload, { headers: headers });
+  }
+
+  removeFromCart(id:string){
+    let payload = {
+      email: this.storageService.getJsonValue('email'),
+      productId: id,
+    };
+
+    var headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + this.storageService.getJsonValue('token'),
+    });
+    let url = environment.baseUrl + '/user/removeFromCart';
+    return this.http.post(url, payload, { headers: headers });
+  }
+  existInCartAndWishlist(id:string){
+    let payload = {
+      email: this.storageService.getJsonValue('email'),
+      productId: id,
+    };
+
+    var headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + this.storageService.getJsonValue('token'),
+    });
+    let url = environment.baseUrl + '/user/product-info';
+    return this.http.post(url, payload, { headers: headers });
+  }
 }

@@ -32,21 +32,21 @@
                 {{product.description}}
             </p>
             <hr>
-
+            <!-- cart and like button -->
             <div class="d-flex justify-content-start align-items-center gap-2 px-5">
-                <!-- <div class="quantity">
-                <button class="" (click)="decrement()"><i class="fa-solid fa-minus"></i></button>
-                <input type="text" name="quantity" [(ngModel)]="quantity">
-                <button class="" (click)="increment()"><i class="fa-solid fa-plus"></i></button>
-            </div> -->
-                <button class="btn btn-danger flex-grow-1">
-                    Buy Now
-                </button>
-                <button class="btn btn-primary flex-grow-1" (click)="addToCart(product._id)">
+                <button class="btn btn-primary flex-grow-1" *ngIf="!isExistInCart" (click)="addToCart(product._id)">
                     Add to Cart
                 </button>
-                <span><i class="fa-regular fa-heart"></i></span>
+                <button class="btn btn-danger flex-grow-1" *ngIf="isExistInCart" (click)="addToCart(product._id)">
+                    Remove From Cart
+                </button>
+                <span (click)="addToWishlist(product._id)" >
+                    <i class="fa-solid fa-heart text-danger" *ngIf="isExistInWishlist"> </i>
+                    <i class="fa-regular fa-heart text-danger" *ngIf="!isExistInWishlist"> </i>
+                </span>
             </div>
+
+
             <div class="mx-5 d-flex justify-content-center gap-1 delivery-box my-1">
                 <span class="d-flex align-items-center mx-3"><i class="fa-solid fa-truck"></i></span>
                 <div class="d-flex flex-column flex-grow-1">

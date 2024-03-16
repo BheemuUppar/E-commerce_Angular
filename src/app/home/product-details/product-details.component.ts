@@ -10,6 +10,8 @@ import { UserService } from 'src/app/services/user.service';
 export class ProductDetailsComponent {
   product: any;
   quantity: number = 1;
+  isExistInCart: boolean = false;
+  isExistInWishlist: boolean = false;
   constructor(
     private actRoute: ActivatedRoute,
     private userService: UserService,
@@ -17,21 +19,39 @@ export class ProductDetailsComponent {
   ) {
     this.actRoute.queryParams.subscribe((params) => {
       this.product = JSON.parse(params['product']);
+      this.cartAndWishlistStatus();
     });
   }
-  // increment() {
-  //   this.quantity++;
-  // }
-  // decrement() {
-  //   if (this.quantity > 1) {
-  //     this.quantity--;
-  //   }
-  // }
 
   addToCart(id: string) {
-    this.userService.addTocart(id).subscribe((res) => {
-      alert('item added to cart ');
-      this.router.navigateByUrl('/cart');
-    });
+    this.userService.addTocart(id).subscribe(
+      (res) => {
+        alert('item added to cart');
+        this.cartAndWishlistStatus();
+        this.router.navigateByUrl('/cart');
+      },
+      (err: any) => {
+        alert('Product Already Exist In Your Cart');
+      }
+    );
+  }
+  addToWishlist(id: any) {
+    this.userService.addToWishlist(id).subscribe(
+      (res: any) => {
+        alert(res.message);
+        this.cartAndWishlistStatus();
+      },
+      (err) => {}
+    );
+  }
+
+  cartAndWishlistStatus() {
+    this.userService
+      .existInCartAndWishlist(this.product._id)
+      .subscribe((res: any) => {
+       this.isExistInCart = res.isExistInCart;
+       this.isExistInWishlist = res.isExistInWishlist;
+
+      });
   }
 }

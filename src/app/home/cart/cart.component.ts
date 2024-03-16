@@ -11,8 +11,9 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./cart.component.css'],
 })
 export class CartComponent implements AfterViewInit {
+
   products: any = [];
-  displayedColumns = ['Select', 'Name', 'Quantity', 'Price', 'Total'];
+  displayedColumns = ['Select', 'Name', 'Quantity', 'Price', 'Total', 'Remove'];
   dataSource!: MatTableDataSource<any>;
   selection = new SelectionModel<any>(true, []);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -28,7 +29,6 @@ export class CartComponent implements AfterViewInit {
     let arr: any[] = [];
     this.userService.fetchCartList().subscribe(
       (res: any) => {
-        console.log('cart: ', res.data);
         for (let obj of res.data) {
           arr.push(obj.id);
         }
@@ -124,4 +124,12 @@ export class CartComponent implements AfterViewInit {
       queryParams: { product: JSON.stringify(data) },
     });
   }
+
+  removeFromCart(id: any) {
+    this.userService.removeFromCart(id).subscribe((res:any)=>{
+      alert(res.message);
+      this.fetchCartIds()
+    })
+    }
+
 }
