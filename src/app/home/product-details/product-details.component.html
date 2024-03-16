@@ -37,7 +37,7 @@
                 <button class="btn btn-primary flex-grow-1" *ngIf="!isExistInCart" (click)="addToCart(product._id)">
                     Add to Cart
                 </button>
-                <button class="btn btn-danger flex-grow-1" *ngIf="isExistInCart" (click)="addToCart(product._id)">
+                <button class="btn btn-danger flex-grow-1" *ngIf="isExistInCart" (click)="removeFromCart(product._id)">
                     Remove From Cart
                 </button>
                 <span (click)="addToWishlist(product._id)" >

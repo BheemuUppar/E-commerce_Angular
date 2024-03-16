@@ -49,9 +49,15 @@ export class ProductDetailsComponent {
     this.userService
       .existInCartAndWishlist(this.product._id)
       .subscribe((res: any) => {
-       this.isExistInCart = res.isExistInCart;
-       this.isExistInWishlist = res.isExistInWishlist;
-
+        this.isExistInCart = res.isExistInCart;
+        this.isExistInWishlist = res.isExistInWishlist;
       });
+  }
+
+  removeFromCart(id: string) {
+    this.userService.removeFromCart(id).subscribe((res:any) => {
+      alert(res.message);
+      this.cartAndWishlistStatus()
+    });
   }
 }
