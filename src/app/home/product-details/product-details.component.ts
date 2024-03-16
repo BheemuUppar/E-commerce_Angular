@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { StorageService } from 'src/app/services/storage.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -15,7 +16,8 @@ export class ProductDetailsComponent {
   constructor(
     private actRoute: ActivatedRoute,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private storageService:StorageService
   ) {
     this.actRoute.queryParams.subscribe((params) => {
       this.product = JSON.parse(params['product']);
@@ -24,34 +26,51 @@ export class ProductDetailsComponent {
   }
 
   addToCart(id: string) {
-    this.userService.addTocart(id).subscribe(
-      (res) => {
-        alert('item added to cart');
-        this.cartAndWishlistStatus();
-        this.router.navigateByUrl('/cart');
-      },
-      (err: any) => {
-        alert('Product Already Exist In Your Cart');
-      }
-    );
+    let token = this.storageService.getJsonValue('token');
+    if(token){
+      this.userService.addTocart(id).subscribe(
+        (res) => {
+          alert('item added to cart');
+          this.cartAndWishlistStatus();
+          this.router.navigateByUrl('/cart');
+        },
+        (err: any) => {
+          alert('Product Already Exist In Your Cart');
+        }
+      );
+    }
+    else{
+      alert('Login to add in cart')
+    }
   }
   addToWishlist(id: any) {
+    let token = this.storageService.getJsonValue('token');
+   if(token){
     this.userService.addToWishlist(id).subscribe(
       (res: any) => {
         alert(res.message);
         this.cartAndWishlistStatus();
       },
-      (err) => {}
+      (err) => {
+        alert(err.error.message)
+      }
     );
+   }else{
+    alert('Login to add in Wishlist')
+  }
   }
 
   cartAndWishlistStatus() {
-    this.userService
+    let token = this.storageService.getJsonValue('token');
+    if(token){
+      this.userService
       .existInCartAndWishlist(this.product._id)
       .subscribe((res: any) => {
         this.isExistInCart = res.isExistInCart;
         this.isExistInWishlist = res.isExistInWishlist;
       });
+    }
+
   }
 
   removeFromCart(id: string) {
