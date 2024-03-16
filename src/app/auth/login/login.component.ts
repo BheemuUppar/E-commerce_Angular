@@ -24,8 +24,8 @@ export class LoginComponent {
     private storageService:StorageService,
     private  userService  : UserService  ) {
     this.loginForm = this.fb.group({
-      email: fb.control('', [Validators.required, Validators.email]),
-      password: fb.control('', [Validators.required]),
+      email: fb.control('test@gmail.com', [Validators.required, Validators.email]),
+      password: fb.control('Test@123', [Validators.required]),
     });
   }
 

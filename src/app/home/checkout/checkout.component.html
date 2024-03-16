@@ -47,7 +47,7 @@
                     </form>
                     <div class="payment">
                         <button type="submit" class="btn btn-outline-primary" [disabled]="!addressForm.valid"
-                            (click)="order('cash')" (click)="addressDetailes()">Cash on Delivery</button>
+                            (click)="order('cash')">Cash on Delivery</button>
                         <span> / </span>
                         <button type="submit" class="btn btn-outline-primary" [disabled]="!addressForm.valid"
                             (click)="order('online')">Pay Now</button>

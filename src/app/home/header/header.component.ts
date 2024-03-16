@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 import { CommonService } from 'src/app/services/common.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { UserService } from 'src/app/services/user.service';
@@ -17,7 +18,8 @@ export class HeaderComponent implements OnInit {
     private commonService: CommonService,
     private storageService: StorageService,
     private router: Router,
-    private userService:UserService
+    private userService:UserService,
+    private authService:AuthService
   ) {}
 
   ngOnInit(): void {
@@ -49,5 +51,8 @@ this.userService.authSource.subscribe((res)=>{
 
   navigateTo(){
     this.router.navigateByUrl("/orders")
+  }
+  verifySession(){
+    this.authService.verifySession().subscribe()
   }
 }

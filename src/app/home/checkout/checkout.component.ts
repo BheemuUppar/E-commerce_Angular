@@ -11,6 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PaymentService } from 'src/app/services/payment.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { MatDialog } from '@angular/material/dialog';
+import { OrderService } from 'src/app/services/order.service';
 
 interface shippingAddress {
   phNo: string;
@@ -43,7 +44,8 @@ export class CheckoutComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private formbuilder: FormBuilder,
     public dialog: MatDialog,
-    private router:Router
+    private router:Router,
+    private orderService:OrderService
   ) {
     this.actRoute.queryParams.subscribe((params) => {
       this.data = JSON.parse(params['product']);
@@ -140,8 +142,10 @@ export class CheckoutComponent implements OnInit {
   }
 
   cashPayment() {
-    
-    alert('Delivery confirmed,Thankyou' + this.addressForm.value.name);
+    this.orderService.placeCashOnDeliveryOrder(this.orderDetails).subscribe((res)=>{
+      this.success = true
+      this.openDialog()
+    })
   }
 
   handlePaymentResponse(response: any): void {
@@ -155,6 +159,7 @@ export class CheckoutComponent implements OnInit {
     this.verifyPayment(obj);
     // Add logic to update order status on the server
   }
+
   @ViewChild('myDialog', { static: true })
   myDialog!: TemplateRef<any>;
   verifyPayment(data: any) {

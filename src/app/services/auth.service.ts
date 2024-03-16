@@ -32,4 +32,8 @@ export class AuthService {
       headers: headers,
     });
   }
+
+  verifySession(){
+    return this.http.post('https://localhost:3000/auth/verifyToken',{} )
+  }
 }

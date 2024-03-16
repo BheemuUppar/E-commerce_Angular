@@ -51,4 +51,6 @@ export class ProductListComponent implements OnInit {
       queryParams: { product: JSON.stringify(product) },
     });
   }
+
+ 
 }
