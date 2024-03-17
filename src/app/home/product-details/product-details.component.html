@@ -1,4 +1,5 @@
-<!-- {{product}} -->
+<div *ngIf="product">
+    <!-- {{product}} -->
 <div class="row gap-2">
     <div class="col-1 multiple-images d-flex flex-column">
         <div class="d-flex justify-content-center" *ngFor="let img of product.images">
@@ -98,6 +99,5 @@
 <div class="m-2">
     <button mat-raised-button color="primary" (click)="openReviewDialog()">Add Review</button> 
 </div>
-<!-- <pre>
-    {{product | json}}
-</pre> -->
+
+</div>

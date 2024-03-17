@@ -48,7 +48,7 @@ export class ProductListComponent implements OnInit {
 
   showProductDetails(product: any) {
     this.router.navigate(['details'], {
-      queryParams: { product: JSON.stringify(product) },
+      queryParams: { productId: product._id },
     });
   }
 

@@ -25,10 +25,18 @@ export class ProductDetailsComponent {
     private productService:ProductService
   ) {
     this.actRoute.queryParams.subscribe((params) => {
-      this.product = JSON.parse(params['product']);
-      this.cartAndWishlistStatus();
+      let productId=params['productId'];
+      console.log(productId)
+     this.getProductById(productId)
     });
   }
+
+getProductById(id:any){
+this.productService.getProductById(id).subscribe((res:any)=>{
+this.product = res.data[0];
+this.cartAndWishlistStatus();
+})
+}
 
   addToCart(id: string) {
     let token = this.storageService.getJsonValue('token');
@@ -107,7 +115,7 @@ export class ProductDetailsComponent {
   addComment(productId :string, comment:any ){
     this.productService.addComment(productId, comment).subscribe((res:any)=>{
         alert(res.message);
-        window.location.reload;
+        window.location.reload();
     })
   }
 }

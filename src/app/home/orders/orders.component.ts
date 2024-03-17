@@ -31,7 +31,7 @@ export class OrdersComponent {
     let arr = [id]
     this.userService.fetchproductsById(arr).subscribe((res:any) => {
       this.router.navigate(['details'], {
-        queryParams: { product: JSON.stringify(res.data[0]) },
+        queryParams: { productId: id },
       })
     });
   }

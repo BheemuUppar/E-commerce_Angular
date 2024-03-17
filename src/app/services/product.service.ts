@@ -14,6 +14,14 @@ export class ProductService {
     let url = environment.baseUrl+"/getCategories"
     return this.http.get(url)
   }
+
+  getProductById(id:any){
+    let obj = { 
+      productIds : [id]
+    }
+    let url = environment.baseUrl + '/getProducts-By-Ids';
+    return this.http.post(url ,obj )
+  }
   getAllProducts() {
     let url = environment.baseUrl + '/getProducts';
     return this.http.get(url)
