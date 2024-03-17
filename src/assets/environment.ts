@@ -8,4 +8,6 @@ export const environment = {
   paymentVerify:'http://localhost:3000/payment/verify',
   getOrders:"http://localhost:3000/user/orders",
   orderCash:'http://localhost:3000/user/order-cash',
+
+  razorpayKey:'rzp_test_GUCLqEesz1MaZA',
 };

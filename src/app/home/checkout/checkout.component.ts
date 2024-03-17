@@ -1,7 +1,6 @@
 import {
   Component,
   OnInit,
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   TemplateRef,
   ViewChild,
@@ -12,6 +11,7 @@ import { PaymentService } from 'src/app/services/payment.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { MatDialog } from '@angular/material/dialog';
 import { OrderService } from 'src/app/services/order.service';
+import { environment } from 'src/assets/environment';
 
 interface shippingAddress {
   phNo: string;
@@ -113,7 +113,7 @@ export class CheckoutComponent implements OnInit {
         this.orderDetails = response.orderDetails;
         console.log(response);
         let options = {
-          key: 'rzp_test_GUCLqEesz1MaZA', // Enter the Key ID generated from the Dashboard
+          key: environment.razorpayKey, // Enter the Key ID generated from the Dashboard
           amount: response.orderDetails.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
 
           currency: 'INR',
