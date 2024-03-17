@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StorageService } from 'src/app/services/storage.service';
 import { UserService } from 'src/app/services/user.service';
+import { ReviewComponent } from '../review/review.component';
+import { MatDialog } from '@angular/material/dialog';
+import { ProductService } from 'src/app/services/product.service';
 
 @Component({
   selector: 'app-product-details',
@@ -17,7 +20,9 @@ export class ProductDetailsComponent {
     private actRoute: ActivatedRoute,
     private userService: UserService,
     private router: Router,
-    private storageService:StorageService
+    private storageService:StorageService,
+    private dialog:MatDialog,
+    private productService:ProductService
   ) {
     this.actRoute.queryParams.subscribe((params) => {
       this.product = JSON.parse(params['product']);
@@ -78,5 +83,31 @@ export class ProductDetailsComponent {
       alert(res.message);
       this.cartAndWishlistStatus()
     });
+  }
+
+  openReviewDialog() {
+    const dialogRef = this.dialog.open(ReviewComponent , {
+      height:"40vh",
+      width:"60vw",
+      data:{
+        productId:this.product._id
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+     console.log(result);
+     let obj = {
+      rating:result.rating,
+      comment:result.comment,
+     }
+     this.addComment(result.productId , obj)
+    });
+  }
+
+  addComment(productId :string, comment:any ){
+    this.productService.addComment(productId, comment).subscribe((res:any)=>{
+        alert(res.message);
+        window.location.reload;
+    })
   }
 }

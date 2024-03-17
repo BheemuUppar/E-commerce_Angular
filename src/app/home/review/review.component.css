@@ -1,0 +1,9 @@
+mat-icon {
+    color: gray; /* Default star color */
+    cursor: pointer;
+  }
+  
+  mat-icon.active {
+    color: yellow; /* Filled star color */
+  }
+  

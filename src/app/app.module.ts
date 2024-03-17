@@ -25,7 +25,6 @@ import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { CheckoutComponent } from './home/checkout/checkout.component';
-import { PaymentDetailsComponent } from './payment-details/payment-details.component';
 import { ShowPaymentStatusComponent } from './home/show-payment-status/show-payment-status.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { LoaderComponent } from './loader/loader.component';
@@ -33,6 +32,9 @@ import { OrdersComponent } from './home/orders/orders.component';
 import { OrderListComponent } from './home/orders/order-list/order-list.component';
 import { OrderDetailsComponent } from './home/orders/order-details/order-details.component';
 import { DataViewModule } from 'primeng/dataview';
+import { ReviewComponent } from './home/review/review.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,12 +51,13 @@ import { DataViewModule } from 'primeng/dataview';
     WishlistComponent,
     CartComponent,
     CheckoutComponent,
-    PaymentDetailsComponent,
+   
     ShowPaymentStatusComponent,
     LoaderComponent,
     OrdersComponent,
     OrderListComponent,
     OrderDetailsComponent,
+    ReviewComponent,
   ],
   imports: [
     BrowserModule,
@@ -70,7 +73,9 @@ import { DataViewModule } from 'primeng/dataview';
     MatPaginatorModule,
     MatCheckboxModule,
     MatDialogModule,
-    DataViewModule
+    DataViewModule,
+    MatButtonModule,
+    MatIconModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AppHttpInterceptor, multi: true }],
   bootstrap: [AppComponent],

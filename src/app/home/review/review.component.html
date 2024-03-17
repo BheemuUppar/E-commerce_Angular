@@ -1,0 +1,23 @@
+<div class="container">
+
+    <h5>Rate This Product</h5>
+    <div>
+        <mat-icon (click)="rateStar(1)" [ngClass]="{ 'active': ratedStars >= 1 }">star</mat-icon>
+        <mat-icon (click)="rateStar(2)" [ngClass]="{ 'active': ratedStars >= 2 }">star</mat-icon>
+        <mat-icon (click)="rateStar(3)" [ngClass]="{ 'active': ratedStars >= 3 }">star</mat-icon>
+        <mat-icon (click)="rateStar(4)" [ngClass]="{ 'active': ratedStars >= 4 }">star</mat-icon>
+        <mat-icon (click)="rateStar(5)" [ngClass]="{ 'active': ratedStars >= 5 }">star</mat-icon>
+      </div>
+      {{comment}}
+    <form class="example-form">      
+        <mat-form-field class="example-full-width w-100 h-100" >
+          <mat-label>Leave a comment</mat-label>
+          <textarea  [(ngModel)]="comment" name="comment" matInput placeholder="This is amazing product..."></textarea>
+        </mat-form-field>
+      </form>
+      <div class="d-flex justify-content-end gap-2" >
+          <button mat-raised-button color="warn" (click)="onOkClick()">Cancel</button>
+        <button mat-raised-button color="primary" (click)="onOkClick()" [disabled]="isDisable()">Comment</button>
+    <!-- <button mat-stroked-button color="accent">Accent</button> -->
+      </div>
+</div>
