@@ -12,6 +12,10 @@ export class AuthService {
     private storageService: StorageService
   ) {}
 
+    registerUser(user:any){
+      return this.http.post(environment.register, user);
+    }
+
   doLogin(email: string, pwd: string) {
     let payload = {
       email: email,

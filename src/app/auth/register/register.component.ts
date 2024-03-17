@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -9,7 +11,7 @@ import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from
 export class RegisterComponent {
 signUpForm : FormGroup;
 passwordMatchError : boolean = false
-constructor(private fb:FormBuilder){
+constructor(private fb:FormBuilder, private authService:AuthService, private router:Router){
   this.signUpForm = this.fb.group({
     name: fb.control('', [Validators.required]),
     email: fb.control('', [Validators.required, Validators.email]),
@@ -23,7 +25,13 @@ constructor(private fb:FormBuilder){
 }
 
 register(){
-  
+  let user = this.signUpForm.value;
+  delete user.cnf_password;
+
+  this.authService.registerUser(user).subscribe((res)=>{
+    alert("User registered, please login to Explore")
+  })
+   
 }
 passwordMatchValidator(controlName: string): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
