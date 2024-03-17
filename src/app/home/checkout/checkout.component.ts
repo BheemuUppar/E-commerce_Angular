@@ -44,8 +44,8 @@ export class CheckoutComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private formbuilder: FormBuilder,
     public dialog: MatDialog,
-    private router:Router,
-    private orderService:OrderService
+    private router: Router,
+    private orderService: OrderService
   ) {
     this.actRoute.queryParams.subscribe((params) => {
       this.data = JSON.parse(params['product']);
@@ -61,13 +61,12 @@ export class CheckoutComponent implements OnInit {
       state: ['washington', Validators.required],
       pincode: ['0000000', Validators.required],
     });
-    
+
     this.paymentService.paymentStatus$.subscribe((res) => {
       if (res.status != undefined) {
         this.statusMessage = res.status;
         if (res.orderDetails) {
           this.savedOrder = res.orderDetails;
-      
         }
         this.cdr.detectChanges(); // Manually trigger change detection
       }
@@ -75,9 +74,12 @@ export class CheckoutComponent implements OnInit {
   }
 
   openDialog() {
-    this.dialog.open(this.myDialog, {
-      disableClose:true,
-     
+    let dialogRef = this.dialog.open(this.myDialog, {
+      disableClose: true,
+    });
+    dialogRef.afterClosed().subscribe((res) => {
+      this.router.navigateByUrl('/list');
+   
     });
   }
 
@@ -142,10 +144,12 @@ export class CheckoutComponent implements OnInit {
   }
 
   cashPayment() {
-    this.orderService.placeCashOnDeliveryOrder(this.orderDetails).subscribe((res)=>{
-      this.success = true
-      this.openDialog()
-    })
+    this.orderService
+      .placeCashOnDeliveryOrder(this.orderDetails)
+      .subscribe((res) => {
+        this.success = true;
+        this.openDialog();
+      });
   }
 
   handlePaymentResponse(response: any): void {
@@ -153,7 +157,7 @@ export class CheckoutComponent implements OnInit {
       status: 'verifying payment',
       orderDetails: undefined,
     });
-   
+
     let obj = { ...response, ...this.orderDetails };
     console.log('after success  ', obj);
     this.verifyPayment(obj);
@@ -167,11 +171,11 @@ export class CheckoutComponent implements OnInit {
       console.log(res);
       if (res.message == 'payment is successful') {
         this.success = true;
-        this.openDialog()
         this.paymentService.paymentStatusSubject.next({
           status: 'successfull',
           orderDetails: res.orderDetails,
         });
+        this.openDialog();
       }
     });
   }
@@ -206,9 +210,7 @@ export class CheckoutComponent implements OnInit {
     return result;
   }
 
-  closeDialog(){
+  closeDialog() {
     this.dialog.closeAll();
-    this.router.navigateByUrl("list")
   }
-
 }

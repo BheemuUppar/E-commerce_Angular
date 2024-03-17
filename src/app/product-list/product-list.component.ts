@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { ProductService } from '../services/product.service';
 import { CommonService } from '../services/common.service';
 import { Router } from '@angular/router';
@@ -15,7 +15,7 @@ export class ProductListComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private commonService: CommonService,
-    private router: Router
+   
   ) {
     this.getAllProducts();
   }
@@ -33,6 +33,7 @@ export class ProductListComponent implements OnInit {
     this.productService.getAllProducts().subscribe((res: any) => {
       this.allProducts = res.data;
       this.products = res.data;
+      
     });
   }
 

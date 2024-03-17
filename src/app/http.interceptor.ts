@@ -32,15 +32,14 @@ export class AppHttpInterceptor implements HttpInterceptor {
             console.log(err.error.message);
           } else if (err.error.message == 'Token has expired') {
             alert('session expired');
+            localStorage.clear();
             userService.auth.next(false);
             this.router.navigateByUrl('/');
-            localStorage.clear();
           }
         }
         throw Error;
       }),
       finalize(() => {
-        // Hide loader when request is complete (successful or failed)
         loaderService.hide();
       })
     );
