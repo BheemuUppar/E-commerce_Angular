@@ -93,4 +93,16 @@ export class UserService {
     let url = environment.baseUrl + '/user/product-info';
     return this.http.post(url, payload, { headers: headers });
   }
+
+  fetchWishlist(){
+    let url = environment.baseUrl + '/user/wishlist';
+    let payload = {
+      email: this.storageService.getJsonValue('email'),
+    };
+    let headers = {
+      Authorization: 'Bearer ' + this.storageService.getJsonValue('token'),
+    };
+
+    return this.http.post(url, payload, { headers: headers });
+  }
 }

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject, Observable, BehaviorSubject } from 'rxjs';
 import { StorageService } from './storage.service';
+import { environment } from 'src/assets/environment';
 declare var Razorpay: any;
 @Injectable({
   providedIn: 'root',
@@ -28,29 +29,19 @@ export class PaymentService {
         alert(response.error.metadata.order_id);
         alert(response.error.metadata.payment_id);
       });
-      // this.rzp.on('payment.success', (response: any) => {
-      //   console.log('in success block');
-      //   this.paymentStatusSubject.next('success');
-      // });
-      // this.rzp.on('payment.error', (response: any) => {
-      //   this.paymentStatusSubject.next('error');
-      // });
+      
     } else {
       console.error('Razorpay is not initialized. Call initialize() first.');
     }
   }
 
   createOrder(orderDetails: any): Observable<any> {
-    // Call your Node.js server to create an order
-    // let payload  = {
-    //   orderDetails:orderDetails,
-     
-    // }
+    
     let headers = {
       Authorization: 'Bearer ' + this.storageService.getJsonValue('token')
     };
     return this.http.post(
-      'http://localhost:3000/payment/createOrder',
+      environment.createOrder,
       orderDetails, {headers}
     );
   }
@@ -62,6 +53,6 @@ export class PaymentService {
     let headers = {
       Authorization: 'Bearer ' + this.storageService.getJsonValue('token')
     };
-    return this.http.post('http://localhost:3000/payment/verify', data,{headers} );
+    return this.http.post(environment.paymentVerify, data,{headers} );
   }
 }

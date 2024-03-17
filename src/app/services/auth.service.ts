@@ -34,6 +34,6 @@ export class AuthService {
   }
 
   verifySession(){
-    return this.http.post('https://localhost:3000/auth/verifyToken',{} )
+    return this.http.post(environment.tokenVerify,{} )
   }
 }

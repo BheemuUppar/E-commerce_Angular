@@ -35,6 +35,7 @@ import { DataViewModule } from 'primeng/dataview';
 import { ReviewComponent } from './home/review/review.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { ProductCardComponent } from './home/product-card/product-card.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -58,6 +59,7 @@ import { MatIconModule } from '@angular/material/icon';
     OrderListComponent,
     OrderDetailsComponent,
     ReviewComponent,
+    ProductCardComponent,
   ],
   imports: [
     BrowserModule,

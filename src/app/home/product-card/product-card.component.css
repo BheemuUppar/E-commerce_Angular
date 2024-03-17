@@ -1,0 +1,27 @@
+
+.card {
+    height: 250px;
+    min-height: 250px;
+    width: 219px;
+    border: none;
+    overflow: hidden;
+    border-radius: 17px;
+    cursor: pointer;
+}
+
+.card-body {
+  background-color: #efefef;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60%;
+  max-height: 60%;
+}
+.product-image {
+  height: 50%;
+  width: 50%;
+  mix-blend-mode: multiply;
+}
+.card-footer{
+    border: none;
+}

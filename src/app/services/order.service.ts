@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { StorageService } from './storage.service';
+import { environment } from 'src/assets/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class OrderService {
       Authorization: 'Bearer ' + this.storageService.getJsonValue('token')
     };
     let payload = {email:email}
-   return  this.http.post("http://localhost:3000/user/orders",payload, {headers} )
+   return  this.http.post(environment.getOrders,payload, {headers} )
   }
 
   placeCashOnDeliveryOrder(orderDetails:any){
@@ -23,6 +24,6 @@ export class OrderService {
       Authorization: 'Bearer ' + this.storageService.getJsonValue('token')
     };
     let payload =orderDetails;
-    return this.http.post('http://localhost:3000/user/order-cash', payload, {headers})
+    return this.http.post(environment.orderCash, payload, {headers})
   }
 }

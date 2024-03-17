@@ -1,0 +1,13 @@
+<div class="card"  (click)="showProductDetails(product)">
+    <div class="card-body">
+        <img class="product-image" src="data:image/png;base64,{{ product.images[0] }}" alt="">
+        <span class="like-btn"></span>
+    </div>
+    <div class="card-footer">
+        <div><strong>{{product.name}}</strong></div>
+        <div class="rating" >
+            <i class="fa-solid fa-star" style="color: #FFD43B;"></i> {{product.rating?product.rating:"N/A"}}
+        </div>
+        <span>&#x20B9;{{product.price}}</span>
+    </div>
+</div>
