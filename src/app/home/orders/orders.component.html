@@ -1,32 +1,39 @@
-<div class="order-container" *ngFor="let order of orders">
-    <div class="order-details">
-        <div class="detail">
-            <span class="detail-label">Order ID:</span>
-            <span class="detail-value">{{ order.id }}</span>
+<div class="" *ngIf="orders.length > 0">
+    <div class="order-container" *ngFor="let order of orders">
+        <div class="order-details">
+            <div class="detail">
+                <span class="detail-label">Order ID:</span>
+                <span class="detail-value">{{ order.id }}</span>
+            </div>
+            <div class="detail">
+                <span class="detail-label">Amount:</span>
+                <span class="detail-value">{{ order.amount }}</span>
+            </div>
+            <div class="detail">
+                <span class="detail-label">Delivery Address:</span>
+                <span class="detail-value">{{ order.deliveryAddress.street + ', ' + order.deliveryAddress.city + ', '+
+                    order.deliveryAddress.pincode }}</span>
+            </div>
+            <div class="detail">
+                <span class="detail-label">Payment Mode:</span>
+                <span class="detail-value">{{ order.paymentMode }}</span>
+            </div>
+            <div class="detail">
+                <span class="detail-label">Current Status:</span>
+                <span class="detail-value">{{ order.currentStatus }}</span>
+            </div>
+
         </div>
-        <div class="detail">
-            <span class="detail-label">Amount:</span>
-            <span class="detail-value">{{ order.amount }}</span>
+        <div class="product-list">
+            <h4>Products:</h4>
+            <ul class="product-list-ul">
+                <li *ngFor="let product of order.products" class="product-list-item"><a
+                        (click)="displayProduct(product.productId)">{{ product.productName }}</a></li>
+                <!-- Display more product details here -->
+            </ul>
         </div>
-        <div class="detail">
-            <span class="detail-label">Delivery Address:</span>
-            <span class="detail-value">{{ order.deliveryAddress.street + ', ' + order.deliveryAddress.city + ', '+ order.deliveryAddress.pincode }}</span>
-        </div>
-        <div class="detail">
-            <span class="detail-label">Payment Mode:</span>
-            <span class="detail-value">{{ order.paymentMode }}</span>
-        </div>
-        <div class="detail">
-            <span class="detail-label">Current Status:</span>
-            <span class="detail-value">{{ order.currentStatus }}</span>
-        </div>
-        
     </div>
-    <div class="product-list">
-        <h4>Products:</h4>
-        <ul class="product-list-ul">
-            <li *ngFor="let product of order.products" class="product-list-item"><a (click)="displayProduct(product.productId)">{{ product.productName }}</a></li>
-            <!-- Display more product details here -->
-        </ul>
-    </div>
+</div>
+<div *ngIf="orders.length == 0">
+    <h3>No Orders</h3>
 </div>
